@@ -1,0 +1,24 @@
+.table-user{
+    position: relative;
+}
+.tfoot{
+    position: absolute;
+    right: 0;
+}
+.user-contain{
+    display: flex;
+    align-content: center;
+}
+.user-info-img{
+    border: 1px rgba(153, 153, 153, 0.651) solid;
+    border-radius: 10px;
+}
+.user-info{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+}
+.user-info-key{
+    font-weight: bold;
+}

@@ -3,6 +3,10 @@ require('dotenv').config();
 let UserRouter = require('./route/users.route');
 let bodyParser = require('body-parser');
 
+//init neccessary npm
+let express= require('express');
+let app= express();
+
 //bodyParser
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -10,10 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 //connect mongo
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/sang-company', {useNewUrlParser: true});
-
-//init neccessary npm
-let express= require('express');
-let app= express();
 
 //render
 app.use('/users', UserRouter);
