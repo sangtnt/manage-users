@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import {Table} from 'react-bootstrap';
+import {Table, Button} from 'react-bootstrap';
 
 import Pagina from './Pagina';
 import List from "./List";
@@ -19,7 +19,6 @@ class Users extends Component {
     componentWillReceiveProps({location={}}){
         if (location.pathname==="/users"){
             this.getUser();
-            console.log(location.pathname);
         }
     }
     componentDidMount(){
@@ -29,7 +28,7 @@ class Users extends Component {
         axios.get('/users')
         .then(users=>{
             this.setState({
-                users: users.data.users.slice(0,10)
+                users: users.data.users.slice(0,9)
             })
         })
     }
@@ -51,7 +50,7 @@ class Users extends Component {
                         <List items={users} render={user=>{
                             return (
                                 <tr>
-                                    <td><Link to={`/users/${user._id}`}>{user.fullname}</Link></td>
+                                    <td><Link className="fullname-user" to={`/users/${user._id}`}>{user.fullname}</Link></td>
                                     <td>{user.age}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>
@@ -59,9 +58,14 @@ class Users extends Component {
                                 </tr>
                             )
                         }}/>
-                        <div className="tfoot">
+                        <div className="tfoot tfoot-right">
                             <Pagina/>
                         </div>
+                        <Link to="/users/addnew">
+                            <div className="tfoot tfoot-left">
+                                <Button variant="info">Add new</Button>
+                            </div>
+                        </Link>
                     </tbody>
                 </Table>
                     <Route path="/users/:idUser" component={UsersModel}/>

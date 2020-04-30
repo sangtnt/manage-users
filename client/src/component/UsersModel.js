@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Modal ,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import { store } from 'react-notifications-component';
+import 'animate.css';
 class UsersModel extends Component {
     constructor(){
         super();
@@ -10,6 +12,12 @@ class UsersModel extends Component {
         }
     }
     componentDidMount(){
+        this.getUser();
+    }
+    componentWillReceiveProps({ location={} }){
+        this.getUser();
+    }
+    getUser=()=>{
         let {idUser} = this.props.match.params;
         axios.get(`/users/${idUser}`)
         .then(user=>{
@@ -27,9 +35,37 @@ class UsersModel extends Component {
         let {user} = this.state;
         let {history} = this.props;
         axios.get(`/users/delete/${user._id}`)
-        .then(
-            history.push('/users')
-        );
+        .then((res)=>{
+            store.addNotification({
+                title: "Successfully!",
+                message: res.data,
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 2000,
+                  onscreen: true
+                }
+              });
+            history.push("/users");
+        })
+        .catch(err=>{
+            store.addNotification({
+                title: "Fail!",
+                message: "Delete Fail!",
+                type: "danger",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 2000,
+                  onscreen: true
+                }
+            });
+        })
     }
     render() {
         let {user} =this.state;

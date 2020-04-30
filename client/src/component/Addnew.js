@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {Form, Button} from 'react-bootstrap';
-import countries from "../country.json";
 import List from './List';
-import axios from 'axios';
+import countries from "../country.json";
+import axios from 'axios'
 import { store } from 'react-notifications-component';
 import 'animate.css';
-class EditUser extends Component {
+class Addnew extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -18,34 +18,21 @@ class EditUser extends Component {
             cancle: true
         }
     }
-    componentDidMount(){
-        let {userId} = this.props.match.params;
-        axios.get(`/users/${userId}`)
-        .then(user=>{
-            this.setState({
-                fullname:user.data.user.fullname,
-                age:user.data.user.age,
-                phone:user.data.user.phone,
-                email:user.data.user.email,
-                country:user.data.user.country,
-                image:user.data.user.image
-            })
-        })
-    }
-    handleChange=(event)=>{
-        let name=event.target.name;
-        let value= event.target.value;
-        this.setState({
-            [name]: value,
-            cancle: false
-        })
+    handleCancle=()=>{
+        let {cancle} =this.state;
+        let res=true;
+        if (!cancle){
+            res=window.confirm("Leave this page?");
+        }
+        if (res){
+            let {history} =this.props;
+            history.push(`/users`);
+        }
     }
     handleSubmit=(event)=>{
         event.preventDefault();
-        let {userId} = this.props.match.params;
         let {fullname,age,phone,email,country, image} =this.state;
         let user={
-            _id: userId,
             fullname: fullname,
             age: age,
             phone: phone,
@@ -53,9 +40,8 @@ class EditUser extends Component {
             country: country,
             image: image
         }
-        axios.post('/users/update', user)
+        axios.post('/users/insert', user)
         .then((res)=>{
-            let {userId} = this.props.match.params;
             let {history} = this.props;
             store.addNotification({
                 title: "Successfully!",
@@ -70,7 +56,7 @@ class EditUser extends Component {
                 onscreen: true
                 }
             });
-            history.push(`/users/${userId}`);
+            history.push(`/users`);
         })
         .catch(err=>{
             store.addNotification({
@@ -88,51 +74,46 @@ class EditUser extends Component {
             });
         });
     }
-    handleCancle=()=>{
-        let {cancle} =this.state;
-        let res=true;
-        if (!cancle){
-            res=window.confirm("Leave this page?");
-        }
-        if (res){
-            let {userId} = this.props.match.params;
-            let {history} =this.props;
-            history.push(`/users/${userId}`);
-        }
+    handleChange=(event)=>{
+        let name=event.target.name;
+        let value= event.target.value;
+        this.setState({
+            [name]: value,
+            cancle: false
+        })
     }
     render() {
-        let {fullname,age,phone,email,country, image} =this.state;
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formBasicFullName">
                         <Form.Label>Full Name</Form.Label>
-                        <Form.Control name="fullname" onChange={this.handleChange} type="text" placeholder="Enter Full Name" value={fullname} required/>
+                        <Form.Control name="fullname" onChange={this.handleChange} type="text" placeholder="Enter Full Name" required/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicAge">
                         <Form.Label>Age</Form.Label>
-                        <Form.Control name="age" onChange={this.handleChange} type="number" placeholder="Enter Age" value={age} required/>
+                        <Form.Control name="age" onChange={this.handleChange} type="number" placeholder="Enter Age" required/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control name="email" onChange={this.handleChange} type="email" placeholder="Enter Email" value={email} required/>
+                        <Form.Control name="email" onChange={this.handleChange} type="email" placeholder="Enter Email" required/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPhone">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control name="phone" onChange={this.handleChange} type="text" placeholder="Enter Phone Number" value={phone} required/>
+                        <Form.Control name="phone" onChange={this.handleChange} type="text" placeholder="Enter Phone Number" required/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPhone">
                         <Form.Label>Image</Form.Label>
-                        <Form.Control name="image" onChange={this.handleChange} type="text" value={image} required/>
+                        <Form.Control name="image" onChange={this.handleChange} type="text" required/>
                     </Form.Group>
 
                     <Form.Group controlId="exampleForm.SelectCustom">
                         <Form.Label>Country</Form.Label>
-                        <Form.Control name="country" onChange={this.handleChange} as="select" custom value={country} required>
+                        <Form.Control name="country" onChange={this.handleChange} as="select" custom required>
                             <List
                                 items={countries}
                                 render={(item)=><option>{item.name}</option>}
@@ -140,7 +121,7 @@ class EditUser extends Component {
                         </Form.Control>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Edit
+                        Add
                     </Button>
                     <Button onClick={this.handleCancle} style={{marginLeft: "20px"}} variant="danger">
                         Cancle
@@ -151,4 +132,4 @@ class EditUser extends Component {
     }
 }
 
-export default EditUser;
+export default Addnew;
