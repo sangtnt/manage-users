@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Modal ,Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 class UsersModel extends Component {
     constructor(){
         super();
@@ -31,7 +32,7 @@ class UsersModel extends Component {
         );
     }
     render() {
-        let {user, show} =this.state;
+        let {user} =this.state;
         return (
             <div>
                 <Modal
@@ -63,7 +64,7 @@ class UsersModel extends Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary">Edit</Button>
+                        <Link to={`/users/update/${user._id}`}><Button variant="secondary">Edit</Button></Link>
                         <Button onClick={this.deleteUser} variant="danger">Delete</Button>
                         <Button onClick={this.closeModel} variant="outline-danger">Close</Button>
                     </Modal.Footer>

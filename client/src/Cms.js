@@ -3,12 +3,14 @@ import React from 'react';
 import {Container, Button} from 'react-bootstrap';
 import Users from "./component/Users";
 import {Switch, Route} from 'react-router-dom';
-import UsersModel from './component/UsersModel';
+import EditUser from './component/EditUser';
 function Cms (){
     return (
         <Container>
-            <Route path="/users" component={Users}/>
-            <Route path="/users/:idUser" component={UsersModel}/>
+            <Switch>
+                <Route path="/users/update/:userId" component={EditUser}/>
+                <Route path="/users" component={Users}/>
+            </Switch>
         </Container>
     );
 }

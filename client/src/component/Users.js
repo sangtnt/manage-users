@@ -2,10 +2,12 @@ import React, { Component} from 'react';
 import {Table} from 'react-bootstrap';
 
 import Pagina from './Pagina';
-import UsersModel from './UsersModel';
 import List from "./List";
 import axios from 'axios';
-import {Link, Route} from 'react-router-dom';;
+import {Link, Route} from 'react-router-dom';
+
+
+import UsersModel from './UsersModel';
 
 class Users extends Component {
     constructor(props){
@@ -14,7 +16,16 @@ class Users extends Component {
             users:[]
         }
     }
+    componentWillReceiveProps({location={}}){
+        if (location.pathname==="/users"){
+            this.getUser();
+            console.log(location.pathname);
+        }
+    }
     componentDidMount(){
+        this.getUser();
+    }
+    getUser=()=>{
         axios.get('/users')
         .then(users=>{
             this.setState({
@@ -53,6 +64,7 @@ class Users extends Component {
                         </div>
                     </tbody>
                 </Table>
+                    <Route path="/users/:idUser" component={UsersModel}/>
             </div>
         );
     }
