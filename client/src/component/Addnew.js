@@ -56,7 +56,7 @@ class Addnew extends Component {
                 onscreen: true
                 }
             });
-            history.push(`/users`);
+            history.goBack();
         })
         .catch(err=>{
             store.addNotification({

@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
 import {Pagination} from 'react-bootstrap';
+import {Link} from 'react-router-dom'
 class Pagina extends Component {
     render() {
-        let active = 2;
+        let {active, pages} = this.props;
+        let start=(Math.ceil(active/5)-1)*5+1;
+        let end= start+4;
+        if (end>pages){
+            end= pages;
+        }
         let items = [];
-        for (let number = 1; number <= 5; number++) {
+        for (let number = start; number <= end; number++) {
+            let className="pag-link";
+            if(number ===active){
+                className+=" pagi-active";
+            }
             items.push(
-                <Pagination.Item key={number} active={number === active}>
-                {number}
-                </Pagination.Item>,
+                <Pagination.Item key={number}>
+                <Link className={className} to={`/users/${number}`}>{number}</Link>
+                </Pagination.Item>
             );
+        }
+        let className="pag-link";
+        let className2="pag-link";
+        if (start==1){
+            className+=" disabled";
+        }
+        if (end==pages){
+            className2+=" disabled";
         }
         return (
             <div>
-                
                 <Pagination>
-                    <Pagination.First />
-                    <Pagination.Prev />
+                    <Link className={className} to={`/users/1`}>‹‹</Link>
+                    <Link className={className} to={`/users/${start-1}`}>‹</Link>
                     {items}
-                    <Pagination.Next />
-                    <Pagination.Last />
+                    <Link className={className2} to={`/users/${start+5}`}>›</Link>
+                    <Link className={className2} to={`/users/${pages}`}>››</Link>
                 </Pagination>
             </div>
         );

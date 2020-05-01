@@ -70,7 +70,7 @@ class EditUser extends Component {
                 onscreen: true
                 }
             });
-            history.push(`/users/${userId}`);
+            history.goBack();
         })
         .catch(err=>{
             store.addNotification({

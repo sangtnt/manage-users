@@ -15,7 +15,6 @@ router.route('/').get((req, res)=>{
         res.json({users});
     })
 })
-
 //insert user
 router.route('/insert').post(function(req,res){
     let user = new Users(req.body);

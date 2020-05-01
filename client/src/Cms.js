@@ -15,11 +15,14 @@ function Cms (){
                 <Switch>
                     <Route path="/users/addnew" component={Addnew}/>
                     <Route path="/users/update/:userId" component={EditUser}/>
+                    <Route path="/users/:page/:userId/search/:userName" component={Users}/>
+                    <Route path="/users/:page" component={Users}/>
                     <Route path="/users" component={Users}/>
+                    <Route exact path="/" component={Users}/>
+                    <Route path="/error" component={Error}/>
+                    <Redirect to="/error"/>
                 </Switch>
             </Container>
-            <Route path="/error" component={Error}/>
-            <Redirect to="/error"/>
         </Container>
     );
 }

@@ -14,7 +14,7 @@ class UsersModel extends Component {
     componentDidMount(){
         this.getUser();
     }
-    componentWillReceiveProps({ location={} }){
+    componentWillReceiveProps(){
         this.getUser();
     }
     getUser=()=>{
@@ -29,7 +29,7 @@ class UsersModel extends Component {
     }
     closeModel=()=>{
         let {history} = this.props;
-        history.push("/users");
+        history.goBack();
     }
     deleteUser= ()=>{
         let {user} = this.state;
@@ -49,7 +49,7 @@ class UsersModel extends Component {
                   onscreen: true
                 }
               });
-            history.push("/users");
+            history.goBack();
         })
         .catch(err=>{
             store.addNotification({

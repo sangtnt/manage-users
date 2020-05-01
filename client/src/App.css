@@ -32,6 +32,33 @@ body{
     border-radius: 100px !important;
     animation: btnAnimation 1s infinite linear;
 }
+.page-link{
+    padding: 0px !important;
+    border: none !important;
+    margin: 0 !important;
+}
+.pag-link,.pag-link .page-link{
+    margin: 0px;
+    padding: .5rem .75rem !important;
+    color: blue;
+    display: block !important;
+    background-color: white;
+    border: 1px rgba(128, 128, 128, 0.212) solid;
+    margin-bottom: 20px;
+    height: 35px;
+    width: 35px;
+    line-height: 15px;
+    border-radius: 1px;
+    transition: all 0.5s ease-out;
+}
+.disabled{
+    pointer-events: none;
+    color: gray
+}
+.pagi-active{
+    background-color: rgb(0, 99, 99);
+    color: white
+}
 @keyframes btnAnimation{
     0%{
         transform: rotate(5deg);
